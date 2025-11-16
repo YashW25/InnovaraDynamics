@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Projects - Admin{% endblock %}
+
+{% block content %}
+<section class="admin-projects-section py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Manage Projects</h2>
+                    <a href="{{ url_for('admin_create') }}" class="btn btn-secondary">Back to Blog</a>
+                </div>
+
+                <!-- Add/Edit Form -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title" id="formTitle">Add New Project</h5>
+                        <form method="POST" action="{{ url_for('admin_projects') }}" id="projectForm">
+                            <input type="hidden" name="id" id="projectId">
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="project_name" class="form-label">Project Name *</label>
+                                        <input type="text" class="form-control" id="project_name" name="project_name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="company_name" class="form-label">Company Name *</label>
+                                        <input type="text" class="form-control" id="company_name" name="company_name" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="about" class="form-label">About Project *</label>
+                                <textarea class="form-control" id="about" name="about" rows="3" required></textarea>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="project_link" class="form-label">Project Link</label>
+                                        <input type="url" class="form-control" id="project_link" name="project_link">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="company_link" class="form-label">Company Link</label>
+                                        <input type="url" class="form-control" id="company_link" name="company_link">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="display_order" class="form-label">Display Order</label>
+                                <input type="number" class="form-control" id="display_order" name="display_order" value="0">
+                                <small class="form-text text-muted">Lower numbers appear first</small>
+                            </div>
+                            
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary" id="submitBtn">Add Project</button>
+                                <button type="button" class="btn btn-secondary" id="cancelBtn" style="display: none;">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Projects List -->
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Current Projects</h5>
+                        
+                        {% if projects %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Order</th>
+                                        <th>Project Name</th>
+                                        <th>Company</th>
+                                        <th>About</th>
+                                        <th>Links</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for project in projects %}
+                                    <tr>
+                                        <td>{{ project.display_order }}</td>
+                                        <td><strong>{{ project.project_name }}</strong></td>
+                                        <td>{{ project.company_name }}</td>
+                                        <td>{{ project.about[:100] }}{% if project.about|length > 100 %}...{% endif %}</td>
+                                        <td>
+                                            {% if project.project_link %}
+                                            <a href="{{ project.project_link }}" target="_blank" class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="fas fa-external-link-alt"></i>
+                                            </a>
+                                            {% endif %}
+                                            {% if project.company_link %}
+                                            <a href="{{ project.company_link }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-building"></i>
+                                            </a>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning me-1" onclick="editProject({{ project.id }}, '{{ project.project_name }}', '{{ project.company_name }}', `{{ project.about }}`, '{{ project.project_link }}', '{{ project.company_link }}', {{ project.display_order }})">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <form method="POST" action="{{ url_for('admin_projects') }}" class="d-inline">
+                                                <input type="hidden" name="delete_id" value="{{ project.id }}">
+                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this project?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <p class="text-muted">No projects added yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function editProject(id, projectName, companyName, about, projectLink, companyLink, displayOrder) {
+    document.getElementById('projectId').value = id;
+    document.getElementById('project_name').value = projectName;
+    document.getElementById('company_name').value = companyName;
+    document.getElementById('about').value = about;
+    document.getElementById('project_link').value = projectLink || '';
+    document.getElementById('company_link').value = companyLink || '';
+    document.getElementById('display_order').value = displayOrder;
+    
+    document.getElementById('formTitle').textContent = 'Edit Project';
+    document.getElementById('submitBtn').textContent = 'Update Project';
+    document.getElementById('cancelBtn').style.display = 'inline-block';
+    
+    document.getElementById('project_name').focus();
+}
+
+document.getElementById('cancelBtn').addEventListener('click', function() {
+    document.getElementById('projectForm').reset();
+    document.getElementById('projectId').value = '';
+    document.getElementById('formTitle').textContent = 'Add New Project';
+    document.getElementById('submitBtn').textContent = 'Add Project';
+    this.style.display = 'none';
+});
+</script>
+{% endblock %}

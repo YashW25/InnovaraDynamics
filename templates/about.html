@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+
+{% block title %}About - Innovara Dynamics{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="about-hero-section py-5 mt-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-4">About Innovara Dynamics</h1>
+                <p class="lead mb-4">
+                    We are a team of passionate technologists and innovators dedicated to helping startups 
+                    transform their vision into reality through technical excellence and strategic partnerships.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission Section -->
+<section class="mission-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto text-center">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-5">
+                        <h2 class="display-5 fw-bold mb-4">Our Mission</h2>
+                        <p class="lead mb-4">
+                            At Innovara Dynamics, we believe that early-stage startups shouldn't be held back by 
+                            technical barriers or budget constraints. Our mission is to provide world-class technical 
+                            expertise in exchange for equity, enabling ambitious entrepreneurs to focus on what they 
+                            do best while we handle the technical complexity.
+                        </p>
+                        <div class="row mt-5">
+                            <div class="col-md-4">
+                                <div class="feature-card">
+                                    <i class="fas fa-rocket fa-3x text-primary mb-3"></i>
+                                    <h5>Accelerate Growth</h5>
+                                    <p class="text-muted">Rapid MVP development and deployment</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="feature-card">
+                                    <i class="fas fa-handshake fa-3x text-primary mb-3"></i>
+                                    <h5>Partnership Focus</h5>
+                                    <p class="text-muted">Equity-based partnerships for mutual success</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="feature-card">
+                                    <i class="fas fa-cogs fa-3x text-primary mb-3"></i>
+                                    <h5>Technical Excellence</h5>
+                                    <p class="text-muted">Cutting-edge technology and best practices</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="team-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="display-5 fw-bold">Our Team</h2>
+                <p class="lead text-muted">Meet the passionate individuals driving innovation forward</p>
+            </div>
+        </div>
+
+        {% if team_members %}
+        <div class="row g-4 justify-content-center">
+            {% for member in team_members %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card team-card h-100 shadow-sm border-0">
+                    <div class="card-body text-center p-4">
+                        <!-- Profile Image Placeholder -->
+                        <div class="team-image mb-3">
+                            <div class="image-placeholder rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center" style="width: 120px; height: 120px;">
+                                <i class="fas fa-user fa-3x text-primary"></i>
+                            </div>
+                        </div>
+                        
+                        <h4 class="card-title mb-2">{{ member.name }}</h4>
+                        <p class="text-primary fw-semibold mb-3">{{ member.position }}</p>
+                        <p class="card-text text-muted mb-4">{{ member.about }}</p>
+                        
+                        <div class="team-links">
+                            {% if member.portfolio_link %}
+                            <a href="{{ member.portfolio_link }}" target="_blank" class="btn btn-outline-primary btn-sm me-2" title="Portfolio">
+                                <i class="fas fa-globe"></i>
+                            </a>
+                            {% endif %}
+                            {% if member.linkedin_link %}
+                            <a href="{{ member.linkedin_link }}" target="_blank" class="btn btn-outline-primary btn-sm" title="LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <div class="empty-state">
+                <i class="fas fa-users fa-4x text-muted mb-3"></i>
+                <h4 class="text-muted">Team Members Coming Soon</h4>
+                <p class="text-muted">Our team profiles are being updated. Check back later!</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section class="projects-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="display-5 fw-bold">Projects Till Now</h2>
+                <p class="lead text-muted">Discover the innovative solutions we've built for our partners</p>
+            </div>
+        </div>
+
+        {% if projects %}
+        <div class="row g-4">
+            {% for project in projects %}
+            <div class="col-lg-6">
+                <div class="card project-card h-100 shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <div class="project-header mb-3">
+                            <h4 class="card-title mb-2">{{ project.project_name }}</h4>
+                            <p class="text-primary fw-semibold mb-0">
+                                <i class="fas fa-building me-2"></i>{{ project.company_name }}
+                            </p>
+                        </div>
+                        
+                        <p class="card-text text-muted mb-4">{{ project.about }}</p>
+                        
+                        <div class="project-links">
+                            {% if project.project_link %}
+                            <a href="{{ project.project_link }}" target="_blank" class="btn btn-primary btn-sm me-2">
+                                <i class="fas fa-external-link-alt me-1"></i>View Project
+                            </a>
+                            {% endif %}
+                            {% if project.company_link %}
+                            <a href="{{ project.company_link }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-building me-1"></i>Visit Company
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <div class="empty-state">
+                <i class="fas fa-code-branch fa-4x text-muted mb-3"></i>
+                <h4 class="text-muted">Projects Coming Soon</h4>
+                <p class="text-muted">We're working on some amazing projects. Stay tuned for updates!</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="display-6 fw-bold mb-4">Ready to Build Something Amazing?</h2>
+                <p class="lead mb-4">Let's partner together to bring your vision to life with our technical expertise.</p>
+                <a href="{{ url_for('partner') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-handshake me-2"></i>Partner With Us
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.about-hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.team-card, .project-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-card:hover, .project-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card {
+    padding: 2rem 1rem;
+}
+
+.feature-card i {
+    opacity: 0.9;
+}
+
+.image-placeholder {
+    border: 3px solid var(--primary-color);
+}
+
+.empty-state {
+    opacity: 0.7;
+}
+</style>
+{% endblock %}

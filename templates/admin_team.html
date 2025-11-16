@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Team - Admin{% endblock %}
+
+{% block content %}
+<section class="admin-team-section py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Manage Team Members</h2>
+                    <a href="{{ url_for('admin_create') }}" class="btn btn-secondary">Back to Blog</a>
+                </div>
+
+                <!-- Add/Edit Form -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title" id="formTitle">Add New Team Member</h5>
+                        <form method="POST" action="{{ url_for('admin_team') }}" id="teamForm">
+                            <input type="hidden" name="id" id="memberId">
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Name *</label>
+                                        <input type="text" class="form-control" id="name" name="name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="position" class="form-label">Position *</label>
+                                        <input type="text" class="form-control" id="position" name="position" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="about" class="form-label">About *</label>
+                                <textarea class="form-control" id="about" name="about" rows="3" required></textarea>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="portfolio_link" class="form-label">Portfolio Link</label>
+                                        <input type="url" class="form-control" id="portfolio_link" name="portfolio_link">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="linkedin_link" class="form-label">LinkedIn Link</label>
+                                        <input type="url" class="form-control" id="linkedin_link" name="linkedin_link">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="display_order" class="form-label">Display Order</label>
+                                <input type="number" class="form-control" id="display_order" name="display_order" value="0">
+                                <small class="form-text text-muted">Lower numbers appear first</small>
+                            </div>
+                            
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary" id="submitBtn">Add Member</button>
+                                <button type="button" class="btn btn-secondary" id="cancelBtn" style="display: none;">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Team Members List -->
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Current Team Members</h5>
+                        
+                        {% if team_members %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Order</th>
+                                        <th>Name</th>
+                                        <th>Position</th>
+                                        <th>About</th>
+                                        <th>Links</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for member in team_members %}
+                                    <tr>
+                                        <td>{{ member.display_order }}</td>
+                                        <td><strong>{{ member.name }}</strong></td>
+                                        <td>{{ member.position }}</td>
+                                        <td>{{ member.about[:100] }}{% if member.about|length > 100 %}...{% endif %}</td>
+                                        <td>
+                                            {% if member.portfolio_link %}
+                                            <a href="{{ member.portfolio_link }}" target="_blank" class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="fas fa-globe"></i>
+                                            </a>
+                                            {% endif %}
+                                            {% if member.linkedin_link %}
+                                            <a href="{{ member.linkedin_link }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                <i class="fab fa-linkedin"></i>
+                                            </a>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning me-1" onclick="editMember({{ member.id }}, '{{ member.name }}', '{{ member.position }}', '{{ member.about }}', '{{ member.portfolio_link }}', '{{ member.linkedin_link }}', {{ member.display_order }})">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <form method="POST" action="{{ url_for('admin_team') }}" class="d-inline">
+                                                <input type="hidden" name="delete_id" value="{{ member.id }}">
+                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this team member?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <p class="text-muted">No team members added yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function editMember(id, name, position, about, portfolioLink, linkedinLink, displayOrder) {
+    document.getElementById('memberId').value = id;
+    document.getElementById('name').value = name;
+    document.getElementById('position').value = position;
+    document.getElementById('about').value = about;
+    document.getElementById('portfolio_link').value = portfolioLink || '';
+    document.getElementById('linkedin_link').value = linkedinLink || '';
+    document.getElementById('display_order').value = displayOrder;
+    
+    document.getElementById('formTitle').textContent = 'Edit Team Member';
+    document.getElementById('submitBtn').textContent = 'Update Member';
+    document.getElementById('cancelBtn').style.display = 'inline-block';
+    
+    document.getElementById('name').focus();
+}
+
+document.getElementById('cancelBtn').addEventListener('click', function() {
+    document.getElementById('teamForm').reset();
+    document.getElementById('memberId').value = '';
+    document.getElementById('formTitle').textContent = 'Add New Team Member';
+    document.getElementById('submitBtn').textContent = 'Add Member';
+    this.style.display = 'none';
+});
+</script>
+{% endblock %}

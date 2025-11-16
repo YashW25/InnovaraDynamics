@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: innovara-dynamics
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        value: innovara#asdfghjkl@12345678
+      - key: EMAILJS_TEMPLATE_ID
+        value: template_dadxpbx
+      - key: EMAILJS_SERVICE_ID
+        value: service_c7vxyss
+      - key: EMAILJS_PUBLIC_KEY
+        value: zC_dJUm7lVsQy8e8R
+      - key: EMAILJS_ACCESS_TOKEN
+        value: dJsjM4gogCVKPk1T65HN9
+      - key: CONTACT_TEMPLATE_ID
+        value: template_yqype79
+      - key: CONTACT_EMAIL
+        value: innovaradynamics@gmail.com
+      - key: FLASK_ENV
+        value: production

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Innovara Dynamics{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <div class="hero-badge">
+                    <span class="badge bg-primary-soft text-primary rounded-pill px-3 py-2">
+                        <i class="fas fa-rocket me-2"></i>Technical Partners for Startups
+                    </span>
+                </div>
+                <h1 class="hero-title">
+                    Build Your Vision Without 
+                    <span class="text-gradient">Cash Constraints</span>
+                </h1>
+                <p class="hero-subtitle">
+                    We provide world-class technical expertise in exchange for equity. 
+                    Focus on your business while we handle the technology.
+                </p>
+                <div class="hero-cta">
+                    <a href="{{ url_for('partner') }}" class="btn btn-primary btn-lg me-3">
+                        <i class="fas fa-handshake me-2"></i>Partner With Us
+                    </a>
+                    <a href="{{ url_for('services') }}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-list me-2"></i>Our Services
+                    </a>
+                </div>
+                
+                <!-- Social Proof -->
+                <div class="social-proof">
+                    <p class="mb-3">Trusted by innovative startups</p>
+                    <div class="d-flex justify-content-center gap-4 opacity-75">
+                        <i class="fas fa-check-circle"></i>
+                        <i class="fas fa-check-circle"></i>
+                        <i class="fas fa-check-circle"></i>
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title">Innovara Edutech</h3>
+                        <p class="card-text">Empowering education through innovative technology solutions. We develop cutting-edge learning platforms and educational tools that transform the learning experience.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title">Innovara DevLabs</h3>
+                        <p class="card-text">Your premier development partner for web and mobile applications. We specialize in building scalable, robust solutions using the latest technologies.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title">Innovara Digital</h3>
+                        <p class="card-text">Digital transformation experts helping businesses modernize their operations. From automation to digital strategy, we've got you covered.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-4">Scale without spending cash</h2>
+                <p class="lead mb-4">Partner with us and grow your startup with equity-based technical solutions.</p>
+                <a href="{{ url_for('partner') }}" class="btn btn-primary btn-lg">Get Started</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

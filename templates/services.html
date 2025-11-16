@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Services - Innovara Dynamics{% endblock %}
+
+{% block content %}
+<section class="services-section py-5 mt-5">
+    <div class="container">
+        <h1 class="display-4 text-center mb-5">Our Services</h1>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title">MVP Development</h3>
+                        <p class="card-text">Fast-track your product to market with our Minimum Viable Product development services. We help you validate your idea quickly and efficiently.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title">Web Applications</h3>
+                        <p class="card-text">Custom web applications built with modern frameworks and best practices. Responsive, scalable, and user-friendly solutions for your business needs.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title">Mobile Apps</h3>
+                        <p class="card-text">Native and cross-platform mobile applications for iOS and Android. We deliver apps that provide exceptional user experiences.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title">Website Development</h3>
+                        <p class="card-text">Professional websites that represent your brand effectively. From simple landing pages to complex e-commerce platforms.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title">Automation</h3>
+                        <p class="card-text">Streamline your business processes with intelligent automation solutions. Reduce manual work and increase efficiency.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title">Technical Consulting</h3>
+                        <p class="card-text">Expert guidance on technology stack selection, architecture design, and development best practices for your startup.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <p class="lead">Interested in our services?</p>
+            <a href="{{ url_for('partner') }}" class="btn btn-primary btn-lg">Partner With Us</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
